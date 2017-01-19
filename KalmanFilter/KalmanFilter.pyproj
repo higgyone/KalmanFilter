@@ -12,6 +12,8 @@
     <OutputPath>.</OutputPath>
     <Name>KalmanFilter</Name>
     <RootNamespace>KalmanFilter</RootNamespace>
+    <InterpreterId>{020abb1d-200b-44c0-9d48-62491fa05309}</InterpreterId>
+    <InterpreterVersion>3.5</InterpreterVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +24,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AveFilter.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="KalmanFilter.py" />
+    <Compile Include="TestValueGenerator.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{020abb1d-200b-44c0-9d48-62491fa05309}\3.5" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
