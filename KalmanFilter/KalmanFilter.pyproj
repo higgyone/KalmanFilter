@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a70f59cc-9c8d-4f35-bceb-ce32c5cb7db3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>KalmanFilter.py</StartupFile>
+    <StartupFile>Main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,8 +30,11 @@
     <Compile Include="AveFilter.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="KalmanFilter.py" />
+    <Compile Include="Main.py" />
     <Compile Include="MovingAverage.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SimpleKalmanFilter.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TestValueGenerator.py">

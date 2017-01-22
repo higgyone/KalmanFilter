@@ -16,5 +16,10 @@ class TestValueGenerator:
         rand = random.uniform(randMin, randMax)
         return  rand
 
+    def GetRandomFixedvalueLimits(self, fixedValue = 0, multiplier = 1):
+        """Return a noisy number between specified limits"""
+        rand = self.GetRandom()
+        return  rand * multiplier  + fixedValue
+
 
 
