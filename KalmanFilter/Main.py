@@ -3,6 +3,7 @@ from AveFilter import AveFilter
 from MovingAverage import MovingAverage
 from LowPassFilter1st import LowPassFilter1st
 from SimpleKalmanFilter import SimpleKalmanFilter
+from HighPassFilter import HighPassFilter
 
 import matplotlib.pyplot as pyplot
 
@@ -12,6 +13,7 @@ aveFilter = AveFilter()
 movAve = MovingAverage(5)
 lpf = LowPassFilter1st()
 kal  = SimpleKalmanFilter()
+hpf = HighPassFilter()
 
 def frange(start, stop, step):
     i = start
@@ -19,37 +21,60 @@ def frange(start, stop, step):
         yield i
         i += step
 
-xKVals = []
-yKVals = []
-yKRandVals = []
+xVals = []
+yValue = []
+yHpf = []
+yNoise = []
+
+#****************High pass filter*************************
+for i in range (0,500):
+    noise = testGenerator.GetRandom(-30.0, 30.0)
+    val =  noise + i * i * 0.001
+    yHpf.append(hpf.HighPassFilter(val))
+    xVals.append(i)
+    yValue.append(val)
+    yNoise.append(noise)
+
+
+pyplot.plot(xVals, yValue, 'b-', xVals, yHpf, 'r-', xVals, yNoise, 'g-')
+pyplot.show()
+
+
+
+
+
+#*****************Simple Kalman Temperature **********************
+#xKVals = []
+#yKVals = []
+#yKRandVals = []
 
 # set the initial estimate at 5oC and prediction at 2
-kal.SetInitalXandP(10,2)
+#kal.SetInitalXandP(10,2)
 
 # for simple temperature sensor:
 # A = 1 - expect the next estimate to be roughly the same as the previous, as long as it doesnt change too fast
 # H = 1 - estimate and measurement are the same units, no need to convert
 # Q = 0.1 - noise covariance in state transition prediction
 # R = 0.5 - measurement noise covariance
-kal.SetAHQR(1,1,0.01,0.5)
+#kal.SetAHQR(1,1,0.01,0.5)
 
-increase = 0.0
-actualNoNoise = []
-lowPass = []
+#increase = 0.0
+#actualNoNoise = []
+#lowPass = []
 
-for i in frange (0.2,100.0, 0.2):
-    xKVals.append(i)
+#for i in frange (0.2,100.0, 0.2):
+#    xKVals.append(i)
 
-    increase += 1/i
-    actualNoNoise.append(increase)
-    z = testGenerator.GetRandomFixedvalueLimits(0,2) + increase
-    yKRandVals.append(z)
-    lowPass.append(lpf.LowPass1stOrderFilter(z))
-    temperature = kal.SimpleKalman(z)
-    yKVals.append(temperature)
+#    increase += 1/i
+#    actualNoNoise.append(increase)
+#    z = testGenerator.GetRandomFixedvalueLimits(0,2) + increase
+#    yKRandVals.append(z)
+#    lowPass.append(lpf.LowPass1stOrderFilter(z))
+#    temperature = kal.SimpleKalman(z)
+#    yKVals.append(temperature)
 
-pyplot.plot(xKVals, yKVals, 'b-', xKVals, yKRandVals, 'r-', xKVals, actualNoNoise, 'g-', xKVals, lowPass, 'y-')
-pyplot.show()
+#pyplot.plot(xKVals, yKVals, 'b-', xKVals, yKRandVals, 'r-', xKVals, actualNoNoise, 'g-', xKVals, lowPass, 'y-')
+#pyplot.show()
 
 #**************Simple Kalman fixed voltage**************
 #kal.SetInitalXandP(14, 6)
